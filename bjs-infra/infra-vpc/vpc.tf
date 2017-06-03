@@ -75,7 +75,7 @@ resource "aws_route_table" "private" {
  
   vpc_id = "${aws_vpc.main.id}"
   tags {
-        Name = "${format("rt-private-%s-%02d",var.stack_name,count.index+1)"
+        Name = "${format("rt-private-%s-%02d",var.stack_name,count.index+1)}"
         Environment = "${var.environment}"    
   }  
 }
@@ -87,7 +87,7 @@ resource "aws_subnet" "private" {
   vpc_id     = "${aws_vpc.main.id}"
   availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
   tags {
-        Name = "${format("subnet-private-%s-%02d",var.stack_name,count.index+1)"
+        Name = "${format("subnet-private-%s-%02d",var.stack_name,count.index+1)}"
         Environment = "${var.environment}"  
     }
 }
