@@ -31,6 +31,7 @@ resource "aws_instance" "nat" {
   net.ipv4.ip_forward = 1
   net.ipv4.conf.eth0.send_redirects = 0
   EOF
+  echo 1
 HEREDOC    
 }
 
