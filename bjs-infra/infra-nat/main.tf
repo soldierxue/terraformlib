@@ -27,8 +27,11 @@ resource "aws_instance" "nat" {
     # Configure ip forwarding and redirects
     echo 1 >  /proc/sys/net/ipv4/ip_forward && echo 0 >  /proc/sys/net/ipv4/conf/eth0/send_redirects
     mkdir -p /etc/sysctl.d/
-    echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/nat.conf
-    echo "net.ipv4.conf.eth0.send_redirects = 0" >> /etc/sysctl.d/nat.conf
+    cat cat <<CATEOF > /etc/sysctl.d/nat.conf
+    net.ipv4.ip_forward = 1
+    net.ipv4.conf.eth0.send_redirects = 0
+    CATEOF
+
 HEREDOC
 
 }
