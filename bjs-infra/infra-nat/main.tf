@@ -18,18 +18,7 @@ resource "aws_instance" "nat" {
         Name = "NAT-EC2-${var.stack_name}#${count.index + 1}"
         Environment = "${var.environment}"         
     }
-  user_data = <<HEREDOC
-  #!/bin/bash
-  yum update -y aws*
-  # Configure iptables
-  /sbin/iptables -t nat -A POSTROUTING -o eth0 -s 0.0.0.0/0 -j MASQUERADE
-  /sbin/iptables-save > /etc/sysconfig/iptables
-  # Configure ip forwarding and redirects
-  echo 1 >  /proc/sys/net/ipv4/ip_forward && echo 0 >  /proc/sys/net/ipv4/conf/eth0/send_redirects
-  mkdir -p /etc/sysctl.d/
-  echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/nat.conf
-  echo "net.ipv4.conf.eth0.send_redirects = 0" >> /etc/sysctl.d/nat.conf
-HEREDOC    
+    
 }
 
 resource "aws_eip" "eip" {
