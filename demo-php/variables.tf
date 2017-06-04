@@ -31,12 +31,3 @@ data "aws_ami" "amazonlinux_ami" {
   owners     = ["amazon"]
 }
 
-
-###
-### Demo: PHPAPP(public subnet) + MySQL(private subnet)
-###
-
-variable "mysqlPrefix" {
-  default = "mysqldb"
-  description = "the prefix name for mysql server"
-}
