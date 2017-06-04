@@ -4,6 +4,9 @@ data "aws_region" "current" {
 variable "service_name" {
   description = "Name of service"
 }
+variable "family_name" {
+  description = "Family Name of task"
+}
 
 variable "docker_image" {
   description = "Docker image to run"

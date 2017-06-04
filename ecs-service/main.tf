@@ -7,6 +7,7 @@ data "template_file" "task_definition" {
 
   vars {
     service_name = "${var.service_name}"
+    family_name = "${var.family_name}"
     docker_image = "${var.docker_image}"
     docker_tag = "${var.docker_tag}"
     container_cpu = "${var.container_cpu}"
@@ -19,7 +20,7 @@ data "template_file" "task_definition" {
 
 # The ECS task that specifies what Docker containers we need to run the service
 resource "aws_ecs_task_definition" "spring_hw_service" {
-  family = "${var.service_name}"
+  family = "${var.family_name}"
   container_definitions = "${data.template_file.task_definition.rendered}"
 }
 
