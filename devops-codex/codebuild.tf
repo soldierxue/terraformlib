@@ -1,3 +1,11 @@
+data "template_file" "buildspec" {
+  template = "${file("${path.module}/buildspecs/spring-jar.yml")}"
+
+  vars {
+    project_path = "${var.project_path}"
+  }
+}
+
 resource "aws_codebuild_project" "spring-ecs-jar" {  
   name         = "spring-jar-${var.name}"
   description  = "builds spring-ecs jar file"
@@ -16,7 +24,8 @@ resource "aws_codebuild_project" "spring-ecs-jar" {
 
   source {
     type = "CODEPIPELINE"
-    buildspec = "${file("${path.module}/buildspecs/spring-jar.yml")}"
+    #buildspec = "${file("${path.module}/buildspecs/spring-jar.yml")}"
+    buildspec = "${data.template_file.buildspec.rendered}"
   }
 
   tags {

@@ -37,6 +37,9 @@ variable ecs_task_port{
 variable ecs_task_desiredcount{
    default = 4
 }
+variable project_path {
+   description = "the path for which project like spring-hw-1 or spring-hw-2"
+}
 
 variable codex_region{
    default = "us-east-1"
