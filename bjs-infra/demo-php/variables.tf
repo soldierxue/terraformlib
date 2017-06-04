@@ -1,3 +1,7 @@
+variable "region" {
+  type = "string"
+  description = "the region where to create the VPC networking resources"
+}
 variable "name" {
    default="jasonxue"
    description = "Stack name to separate different resources"

@@ -1,3 +1,7 @@
+# For AWS Cloud
+provider "aws" {
+  region = "${var.region}"
+}
 resource "aws_instance" "phpapp" {
   ami           = "${data.aws_ami.amazonlinux_ami.id}"
   instance_type = "t2.micro"

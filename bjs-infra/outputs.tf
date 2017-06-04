@@ -1,3 +1,6 @@
+output region {
+  value = "${var.region}"
+}
 output stack_name {
   value = "${var.stack_name}"
 }
