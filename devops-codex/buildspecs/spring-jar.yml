@@ -10,13 +10,13 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - cd ./${var.project_path}
+      - cd ./${project_path}
       - mvn clean package
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
   files:
-    - ./${var.project_path}/target/spring-hw-1-1.0-SNAPSHOT.jar
+    - ./${project_path}/target/spring-hw-1-1.0-SNAPSHOT.jar
     - ./Dockerfile
   discard-paths: yes
