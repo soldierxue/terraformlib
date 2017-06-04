@@ -15,7 +15,7 @@ variable name {
 }
 
 resource "aws_ecr_repository" "ecr_reg" {
-  name = "${var.name}}"
+  name = "${var.name}"
 }
 
 
