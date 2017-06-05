@@ -17,7 +17,6 @@ variable fronend_web_sgid{}
 variable private_subnet_id{}
 variable database_sgid{}
 variable ec2keyname{}
-variable remote_exec{}
 
 
 data "aws_ami" "amazonlinux_ami" {

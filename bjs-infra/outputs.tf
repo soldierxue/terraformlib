@@ -38,7 +38,3 @@ output sg_frontend_id {
 output sg_internal_id {
   value = "${module.securities.sg_internal_id}"
 }
-
-output "remote_exec" {
-  value = ["${module.natgateways.remote-exec}"]
-}

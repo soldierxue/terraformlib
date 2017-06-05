@@ -54,6 +54,11 @@ resource "aws_instance" "database" {
   #!/bin/bash
   # Wait for NAT to be ready, then it can access internet through NAT instance
   sleep 180
+  ping -c 2 ${aws_instance.public_ip}
+  while ["" != "0"];do
+    sleep 30
+    ping -c 2 ${aws_instance.public_ip}
+  done
   yum update -y
   yum install -y mysql55-server
   service mysqld start
