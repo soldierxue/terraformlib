@@ -17,6 +17,6 @@ phases:
       - echo Build completed on `date`
 artifacts:
   files:
-    - ./${project_path}/target/spring-hw-1-1.0-SNAPSHOT.jar
+    - ./${project_path}/target/*.jar
     - ./Dockerfile
   discard-paths: yes
