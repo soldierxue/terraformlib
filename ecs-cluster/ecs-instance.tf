@@ -41,7 +41,7 @@ resource "aws_autoscaling_group" "ecs_cluster" {
   health_check_grace_period = 30
   health_check_type         = "EC2"
   
-  target_group_arns = ["${var.target_group_arn}"]
+  #target_group_arns = ["${var.target_group_arn}"]
 
   lifecycle { create_before_destroy = true }
 
