@@ -62,14 +62,14 @@ resource "aws_autoscaling_policy" "scale_up" {
   depends_on = ["aws_ecs_cluster.ecs_cluster"]
 }
 
-resource "aws_autoscaling_policy" "scale_down" {
-  name = "${var.cluster_name}-instances-scale-down"
-  scaling_adjustment = -1
-  adjustment_type = "ChangeInCapacity"
-  cooldown = 300
-  autoscaling_group_name = "${aws_autoscaling_group.ecs_cluster.name}"
-  depends_on = ["aws_ecs_cluster.ecs_cluster"]
-}
+#resource "aws_autoscaling_policy" "scale_down" {
+#  name = "${var.cluster_name}-instances-scale-down"
+#  scaling_adjustment = -1
+#  adjustment_type = "ChangeInCapacity"
+#  cooldown = 300
+#  autoscaling_group_name = "${aws_autoscaling_group.ecs_cluster.name}"
+#  depends_on = ["aws_ecs_cluster.ecs_cluster"]
+#}
 
 # A CloudWatch alarm that monitors CPU utilization of cluster instances for scaling up
 resource "aws_cloudwatch_metric_alarm" "ecs_cluster_instances_cpu_high" {
@@ -90,24 +90,24 @@ resource "aws_cloudwatch_metric_alarm" "ecs_cluster_instances_cpu_high" {
    depends_on = ["aws_ecs_cluster.ecs_cluster"]
 }
 
-# A CloudWatch alarm that monitors CPU utilization of cluster instances for scaling down
-resource "aws_cloudwatch_metric_alarm" "ecs_cluster_instances_cpu_low" {
-  alarm_name = "${var.cluster_name}-instances-CPU-Utilization-Below-5"
-  alarm_description = "This alarm monitors ${var.cluster_name} instances CPU utilization for scaling down"
-  comparison_operator = "LessThanThreshold"
-  evaluation_periods = "1"
-  metric_name = "CPUUtilization"
-  namespace = "AWS/EC2"
-  period = "300"
-  statistic = "Average"
-  threshold = "5"
-  alarm_actions = ["${aws_autoscaling_policy.scale_down.arn}"]
+# A CloudWatch alarm that monitors CPU utilization of cluster instances for scaling down#
+#resource "aws_cloudwatch_metric_alarm" "ecs_cluster_instances_cpu_low" {
+#  alarm_name = "${var.cluster_name}-instances-CPU-Utilization-Below-5"
+#  alarm_description = "This alarm monitors ${var.cluster_name} instances CPU utilization for scaling down"
+#  comparison_operator = "LessThanThreshold"
+#  evaluation_periods = "1"
+#  metric_name = "CPUUtilization"
+#  namespace = "AWS/EC2"
+#  period = "300"
+#  statistic = "Average"
+#  threshold = "5"
+#  alarm_actions = ["${aws_autoscaling_policy.scale_down.arn}"]
 
-  dimensions {
-    AutoScalingGroupName = "${aws_autoscaling_group.ecs_cluster.name}"
-  }
-   depends_on = ["aws_ecs_cluster.ecs_cluster"]
-}
+#  dimensions {
+#    AutoScalingGroupName = "${aws_autoscaling_group.ecs_cluster.name}"
+#  }
+#   depends_on = ["aws_ecs_cluster.ecs_cluster"]
+#}
 
 # A CloudWatch alarm that monitors memory utilization of cluster instances for scaling up
 resource "aws_cloudwatch_metric_alarm" "ecs_cluster_instances_memory_high" {
