@@ -44,7 +44,7 @@ resource "aws_alb_listener" "instance_listener" {
 resource "aws_alb_listener_rule" "rules" {
   count = "${length(var.alb_tg_names)}"
   listener_arn = "${aws_alb_listener.instance_listener.arn}"
-  priority     = 100+"${count.index}"
+  priority     = "${count.index}+100"
 
   action {
     type             = "forward"
