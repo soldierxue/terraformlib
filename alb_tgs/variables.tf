@@ -41,6 +41,12 @@ variable "alb_listener_port" {
 variable "alb_rule_paths" {
   description = "list of listener rules based on paths"
   type = "list"
+  default = []
+}
+variable "alb_rule_hosts" {
+  description = "list of listener rules based on hostname"
+  type = "list"
+  default = []
 }
 
 variable "vpc_id" {

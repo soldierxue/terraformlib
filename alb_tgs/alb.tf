@@ -42,7 +42,7 @@ resource "aws_alb_listener" "instance_listener" {
 }
 
 resource "aws_alb_listener_rule" "rules" {
-  count = "${length(var.alb_tg_names)}"
+  count = "${length(var.alb_rule_paths)}"
   listener_arn = "${aws_alb_listener.instance_listener.arn}"
   priority     = "${count.index+100}"
 
@@ -56,3 +56,20 @@ resource "aws_alb_listener_rule" "rules" {
     values = ["/${element(var.alb_rule_paths,count.index)}/*"]
   }
 }
+
+resource "aws_alb_listener_rule" "hosts" {
+  count = "${length(var.alb_rule_hosts)}"
+  listener_arn = "${aws_alb_listener.instance_listener.arn}"
+  priority     = "${count.index+100}"
+
+  action {
+    type             = "forward"
+    target_group_arn = "${element(aws_alb_target_group.instance_tg.*.arn, count.index)}"
+  }
+
+  condition {
+    field  = "path-pattern"
+    values = ["${element(var.alb_rule_hosts,count.index)}"]
+  }
+}
+
