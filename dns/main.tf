@@ -1,3 +1,6 @@
+variable vpc_id {
+  description = "id of the to be associated vpc"
+}
 variable dns_zone_name  {
   description = "name for route53 host zone"
 }
@@ -20,6 +23,7 @@ variable dns_names {
 
 resource "aws_route53_zone" "primary" {
   name = "${var.dns_zone_name}"
+  vpc_id = "${var.vpc_id}"
 }
 
 resource "aws_route53_record" "cnames" {
@@ -38,4 +42,19 @@ resource "aws_route53_record" "arecords" {
   type    = "A"
   ttl     = "300"
   records = ["${element(var.dns_a_records,count.index)}"]
+}
+
+#####
+resource "aws_vpc_dhcp_options" "mydhcp" {
+    domain_name = "${var.dns_zone_name}"
+    domain_name_servers = ["AmazonProvidedDNS"]
+    tags {
+      Name = "Submit DEMO DHCP Internal"
+      Owner = "Jason"
+    }
+}
+
+resource "aws_vpc_dhcp_options_association" "dns_resolver" {
+    vpc_id = "${var.vpc_id}"
+    dhcp_options_id = "${aws_vpc_dhcp_options.mydhcp.id}"
 }
