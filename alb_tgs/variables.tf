@@ -11,6 +11,11 @@ variable "environment" {
     description = "Environment tag, e.g prod"
 }
 
+variable "alb_is_internal"{
+    description = "whether or not its a internal alb"
+    default = "1"
+}
+
 variable "alb_subnet_ids" {
   description = "list of subnets where ALB should be deployed"
   type = "list"
