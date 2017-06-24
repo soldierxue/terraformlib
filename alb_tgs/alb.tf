@@ -68,7 +68,7 @@ resource "aws_alb_listener_rule" "hosts" {
   }
 
   condition {
-    field  = "path-pattern"
+    field  = "host-header"
     values = ["${element(var.alb_rule_hosts,count.index)}"]
   }
 }
