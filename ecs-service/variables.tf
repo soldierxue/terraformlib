@@ -43,3 +43,8 @@ variable "ecs_service_role_arn" {
 variable "target_group_arn" {
   description = "ARN of ALB target group for service"
 }
+
+variable "spring_profile_active" {
+  description = "the active profile name for spring cloud application"
+  default = "ecs"
+}
