@@ -1,16 +1,21 @@
-variable dns_zone_name = {
+variable dns_zone_name  {
   description = "name for route53 host zone"
 }
-variable dns_cname_records = {
+
+variable dns_cname_records  {
   description = "records  for route53 cnames"
+  type = "list"
   default = []
 }
-variable dns_a_records = {
+variable dns_a_records  {
   description = "records  for route53 a records"
+  type = "list"
   default = []
 }
-variable dns_names = {
+
+variable dns_names {
   description = "name list for route53 records"
+  type = "list"
 }
 
 resource "aws_route53_zone" "primary" {
