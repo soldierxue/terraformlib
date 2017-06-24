@@ -20,7 +20,7 @@ resource "aws_alb_target_group" "instance_tg" {
   count = "${length(var.alb_tg_names)}"
   name = "${element(var.alb_tg_names, count.index)}-${var.stack_name}"
   protocol = "${element(var.alb_tg_protocals, count.index)}"
-  port = "90"
+  port = "32768"
   vpc_id = "${var.vpc_id}"
   
   depends_on = ["aws_alb.dmz-alb"]
