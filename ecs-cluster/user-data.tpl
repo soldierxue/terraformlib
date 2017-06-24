@@ -3,6 +3,14 @@ exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
 echo Begin: user-data
 
+# Wait for NAT to be ready, then it can access internet through NAT instance
+sleep 180
+ping -c 2 aws.amazon.com
+while ["$?" != "0"];do
+sleep 30
+ping -c 2 aws.amazon.com
+done
+
 echo Begin: update and install packages
 yum update -y
 yum install -y aws-cfn-bootstrap aws-cli jq
