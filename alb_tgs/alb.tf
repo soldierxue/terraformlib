@@ -60,7 +60,7 @@ resource "aws_alb_listener_rule" "rules" {
 resource "aws_alb_listener_rule" "hosts" {
   count = "${length(var.alb_rule_hosts)}"
   listener_arn = "${aws_alb_listener.instance_listener.arn}"
-  priority     = "${count.index+100}"
+  priority     = "${count.index+300}"
 
   action {
     type             = "forward"
