@@ -14,7 +14,7 @@ variable dns_names = {
 }
 
 resource "aws_route53_zone" "primary" {
-  name = "${dns_zone_name}"
+  name = "${var.dns_zone_name}"
 }
 
 resource "aws_route53_record" "cnames" {
