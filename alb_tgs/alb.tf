@@ -20,7 +20,7 @@ resource "aws_alb_target_group" "instance_tg" {
   count = "${length(var.alb_tg_names)}"
   name = "${element(var.alb_tg_names, count.index)}-${var.stack_name}"
   protocol = "${element(var.alb_tg_protocals, count.index)}"
-  port = "0"
+  port = "90"
   vpc_id = "${var.vpc_id}"
   
   depends_on = ["aws_alb.dmz-alb"]
@@ -44,7 +44,7 @@ resource "aws_alb_listener" "instance_listener" {
 resource "aws_alb_listener_rule" "rules" {
   count = "${length(var.alb_tg_names)}"
   listener_arn = "${aws_alb_listener.instance_listener.arn}"
-  priority     = "${count.index}+100"
+  priority     = "${count.index}"
 
   action {
     type             = "forward"
