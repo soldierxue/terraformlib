@@ -30,5 +30,5 @@ output ecr_names {
 }
 
 output ecr_arns {
-  value = ["${aws_ecr_repository.ecr_reg.*.arn}"]
+  value = ["${aws_ecr_repository.ecr_regs.*.arn}"]
 }
