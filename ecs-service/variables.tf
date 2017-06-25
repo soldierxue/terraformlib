@@ -48,3 +48,29 @@ variable "spring_profile_active" {
   description = "the active profile name for spring cloud application"
   default = "ecs"
 }
+
+variable "pc_distinctInstanceCount" {
+  description = "whether or not the service has a placement constraint for distinct instance"
+  default = 0
+}
+variable "pc_memberOfCount" {
+  description = "whether or not the service has a placement constraint for memberOf"
+  default = 0
+}
+variable "pc_memberOf_expression" {
+  description = "the erxpression for placement constraint for memberOf"
+  default = ""
+}
+
+variable "ps_count" {
+  description = "whether or not the service has a placement strategy"
+  default = 0
+}
+variable "ps_type" {
+  description = "if the service has a placement strategy, what's the type"
+  default = "binpack"
+}
+variable "ps_field" {
+  description = "if the service has a placement strategy, according to the type,what's the filed"
+  default = "cpu"
+}

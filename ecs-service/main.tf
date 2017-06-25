@@ -40,4 +40,18 @@ resource "aws_ecs_service" "spring_hw_service" {
     container_name = "${var.service_name}"
     container_port = "${var.container_port}"
   }
+  placement_strategy {
+    count = "${var.ps_count}"
+    type  = "${var.ps_type}"
+    field = "${var.ps_field}"
+  }  
+  placement_constraints {
+    count = "${var.pc_memberOfCount}"
+    type       = "memberOf"
+    expression = "${var.pc_memberOf_expression}"
+  }
+  placement_constraints {
+    count = "${var.pc_distinctInstanceCount}"
+    type       = "distinctInstance"
+  }  
 }
