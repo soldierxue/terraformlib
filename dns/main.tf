@@ -19,6 +19,7 @@ variable dns_a_records  {
 variable dns_names {
   description = "name list for route53 records"
   type = "list"
+  default = []
 }
 
 resource "aws_route53_zone" "primary" {
