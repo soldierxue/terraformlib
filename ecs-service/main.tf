@@ -27,6 +27,7 @@ resource "aws_ecs_task_definition" "spring_hw_service" {
 
 # A long-running ECS service for the spring_hw_service task
 resource "aws_ecs_service" "spring_hw_service" {
+  count = "${var.pc_memberOfCount == 0 && var.pc_distinctInstanceCount== 0 ? 1 : 0}"
   name = "${var.service_name}"
   cluster = "${var.cluster_name}"
   task_definition = "${aws_ecs_task_definition.spring_hw_service.arn}"
@@ -41,17 +42,58 @@ resource "aws_ecs_service" "spring_hw_service" {
     container_port = "${var.container_port}"
   }
   placement_strategy {
-    count = "${var.ps_count}"
+    type  = "${var.ps_type}"
+    field = "${var.ps_field}"
+  }
+}
+
+resource "aws_ecs_service" "spring_hw_service_with_pc_memberof" {
+  count = "${var.pc_memberOfCount}"
+  
+  name = "${var.service_name}"
+  cluster = "${var.cluster_name}"
+  task_definition = "${aws_ecs_task_definition.spring_hw_service.arn}"
+  desired_count = "${var.desired_count}"
+  deployment_minimum_healthy_percent = 50
+  deployment_maximum_percent = 100
+  iam_role = "${var.ecs_service_role_arn}"
+
+  load_balancer {
+    target_group_arn = "${var.target_group_arn}"
+    container_name = "${var.service_name}"
+    container_port = "${var.container_port}"
+  }
+  placement_strategy {
     type  = "${var.ps_type}"
     field = "${var.ps_field}"
   }  
   placement_constraints {
-    count = "${var.pc_memberOfCount}"
     type       = "memberOf"
     expression = "${var.pc_memberOf_expression}"
   }
+}
+
+resource "aws_ecs_service" "spring_hw_service_with_pc_distinctinstance" {
+  count = "${var.pc_distinctInstanceCount}"
+  
+  name = "${var.service_name}"
+  cluster = "${var.cluster_name}"
+  task_definition = "${aws_ecs_task_definition.spring_hw_service.arn}"
+  desired_count = "${var.desired_count}"
+  deployment_minimum_healthy_percent = 50
+  deployment_maximum_percent = 100
+  iam_role = "${var.ecs_service_role_arn}"
+
+  load_balancer {
+    target_group_arn = "${var.target_group_arn}"
+    container_name = "${var.service_name}"
+    container_port = "${var.container_port}"
+  }
+  placement_strategy {
+    type  = "${var.ps_type}"
+    field = "${var.ps_field}"
+  }  
   placement_constraints {
-    count = "${var.pc_distinctInstanceCount}"
     type       = "distinctInstance"
   }  
 }

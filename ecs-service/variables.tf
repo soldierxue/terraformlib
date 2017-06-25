@@ -64,7 +64,7 @@ variable "pc_memberOf_expression" {
 
 variable "ps_count" {
   description = "whether or not the service has a placement strategy"
-  default = 0
+  default = 1
 }
 variable "ps_type" {
   description = "if the service has a placement strategy, what's the type"
