@@ -27,7 +27,7 @@ resource "aws_route53_zone" "primary" {
 }
 
 resource "aws_route53_record" "cnames" {
-  count = "${length(var.dns_cname_records)}"
+  count = "${length(var.dns_a_records) == 0 ? length(var.dns_names) : 0}"
   zone_id = "${aws_route53_zone.primary.zone_id}"
   name    = "${element(var.dns_names,count.index)}"
   type    = "CNAME"
@@ -36,7 +36,7 @@ resource "aws_route53_record" "cnames" {
 }
 
 resource "aws_route53_record" "arecords" {
-  count = "${length(var.dns_a_records)}"
+  count = "${length(var.dns_cname_records) == 0 ? length(var.dns_names) : 0}}"
   zone_id = "${aws_route53_zone.primary.zone_id}"
   name    = "${element(var.dns_names,count.index)}"
   type    = "A"
