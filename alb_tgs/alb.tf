@@ -23,6 +23,10 @@ resource "aws_alb_target_group" "instance_tg" {
   port = "32768"
   vpc_id = "${var.vpc_id}"
   
+  health_check {
+     path = "/health"
+  }
+  
   depends_on = ["aws_alb.dmz-alb"]
 }
 
