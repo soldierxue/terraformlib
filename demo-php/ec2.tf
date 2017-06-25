@@ -1,3 +1,25 @@
+resource "aws_instance" "database" {
+  ami           = "${data.aws_ami.amazonlinux_ami.id}"
+  instance_type = "t2.micro"
+  associate_public_ip_address = "false"
+  subnet_id = "${var.private_subnet_id}"
+  vpc_security_group_ids = ["${var.database_sgid}"]
+  key_name = "${var.ec2keyname}"
+  tags {
+        Name = "${format("mysql-%s-%s", var.name, var.environment)}"
+  }
+  user_data = <<HEREDOC
+  #!/bin/bash
+  yum update -y
+  yum install -y mysql55-server
+  service mysqld start
+  /usr/bin/mysqladmin -u root password 'secret'
+  mysql -u root -psecret -e "create user 'root'@'%' identified by 'secret';" mysql
+  mysql -u root -psecret -e 'CREATE TABLE mytable (mycol varchar(255));' test
+  mysql -u root -psecret -e "INSERT INTO mytable (mycol) values ('terraform with aws great');" test
+HEREDOC
+}
+
 resource "aws_instance" "phpapp" {
   ami           = "${data.aws_ami.amazonlinux_ami.id}"
   instance_type = "t2.micro"
@@ -38,24 +60,3 @@ HEREDOC
   depends_on = ["${aws_instance.database}"]
 }
 
-resource "aws_instance" "database" {
-  ami           = "${data.aws_ami.amazonlinux_ami.id}"
-  instance_type = "t2.micro"
-  associate_public_ip_address = "false"
-  subnet_id = "${var.private_subnet_id}"
-  vpc_security_group_ids = ["${var.database_sgid}"]
-  key_name = "${var.ec2keyname}"
-  tags {
-        Name = "${format("mysql-%s-%s", var.name, var.environment)}"
-  }
-  user_data = <<HEREDOC
-  #!/bin/bash
-  yum update -y
-  yum install -y mysql55-server
-  service mysqld start
-  /usr/bin/mysqladmin -u root password 'secret'
-  mysql -u root -psecret -e "create user 'root'@'%' identified by 'secret';" mysql
-  mysql -u root -psecret -e 'CREATE TABLE mytable (mycol varchar(255));' test
-  mysql -u root -psecret -e "INSERT INTO mytable (mycol) values ('terraform with aws great');" test
-HEREDOC
-}
