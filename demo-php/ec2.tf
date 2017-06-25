@@ -10,6 +10,13 @@ resource "aws_instance" "database" {
   }
   user_data = <<HEREDOC
   #!/bin/bash
+  # Wait for NAT to be ready, then it can access internet through NAT instance
+  sleep 180
+  ping -c 2 aws.amazon.com
+  while ["$?" != "0"];do
+    sleep 30
+    ping -c 2 aws.amazon.com
+  done    
   yum update -y
   yum install -y mysql55-server
   service mysqld start
@@ -44,6 +51,13 @@ resource "aws_instance" "phpapp" {
   }
   user_data = <<HEREDOC
   #!/bin/bash
+  # Wait for NAT to be ready, then it can access internet through NAT instance
+  sleep 180
+  ping -c 2 aws.amazon.com
+  while ["$?" != "0"];do
+    sleep 30
+    ping -c 2 aws.amazon.com
+  done  
   yum update -y
   yum install -y httpd24 php56 php56-mysqlnd
   service httpd start
