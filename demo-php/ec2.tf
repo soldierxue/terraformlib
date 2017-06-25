@@ -57,6 +57,6 @@ resource "aws_instance" "phpapp" {
   echo "?>" >> /var/www/html/calldb.php
 HEREDOC
 
-  depends_on = ["${aws_instance.database}"]
+  #depends_on = ["${aws_instance.database}"]
 }
 
