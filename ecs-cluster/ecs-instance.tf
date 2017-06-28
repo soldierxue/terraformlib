@@ -44,7 +44,8 @@ resource "aws_autoscaling_group" "ecs_cluster" {
   #target_group_arns = ["${var.target_group_arn}"]
 
   lifecycle { create_before_destroy = true }
-
+  
+  enabled_metrics = ["GroupMinSize","GroupMaxSize","GroupDesiredCapacity","GroupInServiceInstances","GroupPendingInstances","GroupStandbyInstances","GroupTotalInstances"]
   tag {
     key = "Name"
     value = "${var.cluster_name}-instance"
@@ -110,23 +111,23 @@ resource "aws_cloudwatch_metric_alarm" "ecs_cluster_instances_cpu_high" {
 #}
 
 # A CloudWatch alarm that monitors memory utilization of cluster instances for scaling up
-#resource "aws_cloudwatch_metric_alarm" "ecs_cluster_instances_memory_high" {
-#  alarm_name = "${var.cluster_name}-instances-Memory-Utilization-Above-80"
-#  alarm_description = "This alarm monitors ${var.cluster_name} instances memory utilization for scaling up"
-#  comparison_operator = "GreaterThanOrEqualToThreshold"
-#  evaluation_periods = "1"
-#  metric_name = "MemoryUtilization"
-#  namespace = "AWS/EC2"
-#  period = "300"
-#  statistic = "Average"
-#  threshold = "80"
-#  alarm_actions = ["${aws_autoscaling_policy.scale_down.arn}"]
+resource "aws_cloudwatch_metric_alarm" "ecs_cluster_instances_memory_high" {
+  alarm_name = "${var.cluster_name}-instances-Memory-Utilization-Above-80"
+  alarm_description = "This alarm monitors ${var.cluster_name} instances memory utilization for scaling up"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods = "1"
+  metric_name = "MemoryUtilization"
+  namespace = "AWS/EC2"
+  period = "300"
+  statistic = "Average"
+  threshold = "80"
+  alarm_actions = ["${aws_autoscaling_policy.scale_up.arn}"]
 
-#  dimensions {
-#    AutoScalingGroupName = "${aws_autoscaling_group.ecs_cluster.name}"
-#  }
-#   depends_on = ["aws_ecs_cluster.ecs_cluster"]
-#}
+  dimensions {
+    AutoScalingGroupName = "${aws_autoscaling_group.ecs_cluster.name}"
+  }
+   depends_on = ["aws_ecs_cluster.ecs_cluster"]
+}
 
 # A CloudWatch alarm that monitors memory utilization of cluster instances for scaling down
 #resource "aws_cloudwatch_metric_alarm" "ecs_cluster_instances_memory_low" {
