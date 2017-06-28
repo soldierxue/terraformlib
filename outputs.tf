@@ -4,9 +4,6 @@ output stack_name {
 output environment {
   value = "${var.environment}"
 }
-output base_cidr_block {
-  value = "${module.m_global_vpc.base_cidr_block}"
-}
 output vpc_id {
   value = "${module.m_global_vpc.vpc_id}"
 }
