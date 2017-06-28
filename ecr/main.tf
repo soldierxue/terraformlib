@@ -4,7 +4,7 @@
  * Usage:
  *
  *    module "m_ecr" {
- *      source      = "github.com/soldierxue/terraformlib/code-commit"
+ *      source      = "github.com/soldierxue/terraformlib/ecr"
  *      name        = "my-repo"
  *    }
  *
