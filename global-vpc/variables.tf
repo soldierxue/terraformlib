@@ -17,11 +17,11 @@ variable "base_cidr_block" {
 variable "private_subnets_cidr"{
    type="list"
    description = "Subnets CIDR for private subnets"
-   default = ["10.0.48.0/20","10.0.112.0/20"]
+   default = ["10.0.48.0/20","10.0.112.0/20","10.0.240.0/20"]
 }
 variable "public_subnets_cidr"{
    type="list"
    description = "Subnets CIDR for public subnets"
-   default = ["10.0.0.0/20","10.0.16.0/20"]
+   default = ["10.0.0.0/20","10.0.16.0/20","10.0.32.0/20"]
 }
 
