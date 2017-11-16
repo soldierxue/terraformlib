@@ -32,8 +32,8 @@ resource "aws_ecs_service" "spring_hw_service" {
   cluster = "${var.cluster_name}"
   task_definition = "${aws_ecs_task_definition.spring_hw_service.arn}"
   desired_count = "${var.desired_count}"
-  deployment_minimum_healthy_percent = 50
-  deployment_maximum_percent = 100
+  deployment_minimum_healthy_percent = 100
+  deployment_maximum_percent = 200
   iam_role = "${var.ecs_service_role_arn}"
 
   load_balancer {
@@ -54,8 +54,8 @@ resource "aws_ecs_service" "spring_hw_service_with_pc_memberof" {
   cluster = "${var.cluster_name}"
   task_definition = "${aws_ecs_task_definition.spring_hw_service.arn}"
   desired_count = "${var.desired_count}"
-  deployment_minimum_healthy_percent = 50
-  deployment_maximum_percent = 100
+  deployment_minimum_healthy_percent = 100
+  deployment_maximum_percent = 200
   iam_role = "${var.ecs_service_role_arn}"
 
   load_balancer {
@@ -80,8 +80,8 @@ resource "aws_ecs_service" "spring_hw_service_with_pc_distinctinstance" {
   cluster = "${var.cluster_name}"
   task_definition = "${aws_ecs_task_definition.spring_hw_service.arn}"
   desired_count = "${var.desired_count}"
-  deployment_minimum_healthy_percent = 50
-  deployment_maximum_percent = 100
+  deployment_minimum_healthy_percent = 100
+  deployment_maximum_percent = 200
   iam_role = "${var.ecs_service_role_arn}"
 
   load_balancer {
