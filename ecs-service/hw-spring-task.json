@@ -19,7 +19,8 @@
     },
     "environment": [
       { "name": "SERVICE_NAME", "value": "${service_name}"},
-      { "name": "spring.profiles.active", "value": "${spring_profile_active}"}  
+      { "name": "spring.profiles.active", "value": "${spring_profile_active}"},
+      { "name": "SPRING_PROFILES_ACTIVE", "value": "${spring_profile_active}"}
     ]
   }
 ]
