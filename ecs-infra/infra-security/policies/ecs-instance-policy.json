@@ -11,6 +11,7 @@
         "ecs:Poll",
         "ecs:RegisterContainerInstance",
         "ecs:StartTelemetrySession",
+        "ecs:Describe*",
         "ecs:Submit*",
         "ecs:StartTask",
         "ecr:GetAuthorizationToken",
