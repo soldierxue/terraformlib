@@ -2,7 +2,7 @@ resource "aws_security_group" "frontend" {
   name        = "dmz-sg"
   description = "Open access for Internet HTTP/SSH connection inbound"
   vpc_id      = "${var.vpc_id}"
-  tags{
+  tags = {
      Name = "${format("sg-frontend-%s-%s", var.name, var.environment)}"
   }
   
@@ -41,7 +41,7 @@ resource "aws_security_group" "frontend" {
 
 resource "aws_security_group" "database" {
   name = "db-sg"
-  tags {
+  tags = {
         Name = "${format("sg-database-%s-%s", var.name, var.environment)}"
   }
   description = "SG for db access from internal tcp CONNECTION INBOUND"
@@ -80,7 +80,7 @@ resource "aws_security_group" "internal" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
+  tags = {
     Name = "${format("sg-internal-%s-%s", var.name, var.environment)}"
   }
 }
