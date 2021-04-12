@@ -5,7 +5,7 @@ resource "aws_instance" "database" {
   subnet_id = "${var.private_subnet_id}"
   vpc_security_group_ids = ["${var.database_sgid}"]
   key_name = "${var.ec2keyname}"
-  tags {
+  tags = {
         Name = "${format("mysql-%s-%s", var.name, var.environment)}"
   }
   user_data = <<HEREDOC
@@ -46,7 +46,7 @@ resource "aws_instance" "phpapp" {
      delete_on_termination="true"  
   }
   
-  tags {
+  tags = {
         Name = "${format("phpweb-%s-%s", var.name, var.environment)}"
   }
   user_data = <<HEREDOC
