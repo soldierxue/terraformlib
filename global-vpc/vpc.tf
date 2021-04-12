@@ -3,7 +3,7 @@ resource "aws_vpc" "main" {
   cidr_block = "${var.base_cidr_block}"
   enable_dns_hostnames = true
   enable_dns_support = true
-  tags {
+  tags = {
         Name = "${format("vpc-%s-%s", var.name, var.environment)}"
         Environment = "${var.environment}"
   }
@@ -13,7 +13,7 @@ resource "aws_vpc" "main" {
 # To Create a IGW binding with the above VPC
 resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
-  tags {
+  tags = {
         Name = "${format("igw-%s-%s", var.name, var.environment)}"
         Environment = "${var.environment}"
   }
@@ -23,11 +23,11 @@ resource "aws_internet_gateway" "main" {
 # To Create a route table for ec2 in public subnet to access internet from IGW
 resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.main.id}"
-  route {
+  route = {
         cidr_block =  "0.0.0.0/0"
         gateway_id = "${aws_internet_gateway.main.id}"
   }
-  tags {
+  tags = {
         Name = "${format("pub-route-table-%s-%s", var.name, var.environment)}"
         Environment = "${var.environment}"
   }  
@@ -39,7 +39,7 @@ resource "aws_subnet" "public" {
   cidr_block = "${element(var.public_subnets_cidr, count.index)}"
   vpc_id     = "${aws_vpc.main.id}"
   availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
-  tags {
+  tags = {
         Name = "${format("public-subnet-%s-%s-%03d", var.name, var.environment,count.index+1)}"
         Environment = "${var.environment}"
     }
@@ -71,12 +71,12 @@ resource "aws_route_table" "private" {
   count = "${length(data.aws_availability_zones.all.names)}"
  
   vpc_id = "${aws_vpc.main.id}"
-  route {
+  route = {
         cidr_block =  "0.0.0.0/0"
         nat_gateway_id = "${element(aws_nat_gateway.ngw.*.id, count.index)}"
   }
   
-  tags {
+  tags = {
         Name = "${format("private-route-table-%s-%s-%03d", var.name, var.environment,count.index+1)}"
         Environment = "${var.environment}"
   }  
@@ -88,7 +88,7 @@ resource "aws_subnet" "private" {
   cidr_block = "${element(var.private_subnets_cidr, count.index)}"
   vpc_id     = "${aws_vpc.main.id}"
   availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
-  tags {
+  tags = {
         Name = "${format("private-subnet-%s-%s-%03d", var.name, var.environment,count.index+1)}"
         Environment = "${var.environment}"
   }
