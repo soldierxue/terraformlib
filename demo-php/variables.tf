@@ -25,7 +25,7 @@ data "aws_ami" "amazonlinux_ami" {
 
   filter {
     name   = "name"
-    values = ["amzn-ami-hvm*2017*x86_64*ebs*"]
+    values = ["amzn-ami-hvm*2021*x86_64*ebs*"]
   }
 
   owners     = ["amazon"]
